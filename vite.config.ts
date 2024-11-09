@@ -4,17 +4,11 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), glsl(
-    {
-      include: [
-        '**/*.glsl',
-      ],
-      exclude: undefined,
-      warnDuplicatedImports: true,
-      defaultExtension: 'glsl',
-      compress: false,
-      watch: true,
-      root: '/'
-    }
-  )],
+  plugins: [
+    react(),
+    glsl({
+      include: /\.(vs|fs|frag|vert|glsl)$/,
+      compress: true,
+    }),
+  ],
 })
