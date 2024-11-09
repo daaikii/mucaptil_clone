@@ -45,8 +45,11 @@
 
 
 
-
-
+#canvas{
+  height:100vh;
+  position:fixed;
+  z-index: -1;
+}
 
 .contents{
   padding:0 200px;
@@ -56,13 +59,14 @@ section{
   height:100vh;
 }
 
-.top{
-  opacity: 0;
-  position: relative;
-} 
-.top.display{
-  opacity:1;
+.fixed{
+  position: fixed;
 }
+
+.top{
+  position: relative;
+  opacity:1;
+} 
 .section-title{
   font-size:3rem;
 }
@@ -75,10 +79,4 @@ section{
 .top-source-link:focus,
 .top-source-link:hover{
   color:red;
-}
-
-#canvas{
-  height:100vh;
-  position:fixed;
-  z-index: -1;
 }
