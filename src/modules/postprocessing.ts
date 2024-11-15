@@ -12,22 +12,19 @@ type Args = {
 export default class Postprocessing {
   // BASE
   private size: { width: number, height: number }
-  private camera: THREE.OrthographicCamera
   // RENDER TARGET
-  public renderTargetA: THREE.WebGLRenderTarget
-  public renderTargetB: THREE.WebGLRenderTarget
+  public renderTargetA!: THREE.WebGLRenderTarget
+  public renderTargetB!: THREE.WebGLRenderTarget
   // OBJ
-  public mesh: THREE.Mesh
-  public mat: THREE.ShaderMaterial
-  constructor({ size, camera }: Args) {
+  public mesh!: THREE.Mesh
+  public mat!: THREE.ShaderMaterial
+  constructor({ size }: Args) {
     // BASE
     this.size = size
-    this.camera = camera
 
     this.setUpRenderTarget()
     this.setUpObj()
   }
-
 
   private setUpRenderTarget() {
     this.renderTargetA = new THREE.WebGLRenderTarget(this.size.width, this.size.height)

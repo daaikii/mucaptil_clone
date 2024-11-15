@@ -14,32 +14,28 @@ import alpha9 from "/alpha/9.jpg"
 
 import vertex from "../glsl/numberGen/vertex.glsl"
 import fragment from "../glsl/numberGen/fragment.glsl"
+import {OrthographicCamera} from "three";
 
 
 export default class NumberGen {
   // BASE
   public scene: THREE.Scene
-  private camera: THREE.OrthographicCamera
   // TEXTURE
   private images: string[]
   private textures: THREE.Texture[]
   // RT
-  public renderTarget: THREE.WebGLRenderTarget
+  public renderTarget!: THREE.WebGLRenderTarget
   // OBJ
-  public mesh1: THREE.Mesh | null
-  public mesh2: THREE.Mesh | null
+  public mesh1!: THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>
+  public mesh2!: THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>
 
-  constructor(camera: THREE.OrthographicCamera) {
+  constructor(camera:OrthographicCamera) {
     // BASE
     this.scene = new THREE.Scene()
-    this.camera = camera
     this.scene.add(camera)
     // TEXTURE
     this.images = [alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7, alpha8, alpha9]
     this.textures = []
-    // OBJ
-    this.mesh1 = null
-    this.mesh2 = null
     // FUNCTIONS
     this.setUpTexture()
     this.setRenderTarget()

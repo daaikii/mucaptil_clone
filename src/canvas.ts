@@ -1,5 +1,4 @@
 import * as THREE from "three"
-import gsap from "gsap"
 
 import Points from "./modules/points"
 import Postprocessing from "./modules/postprocessing";
@@ -10,23 +9,23 @@ export default class Canvas {
   //BASE SETTINGS
   private canvas: HTMLCanvasElement
   private scene: THREE.Scene;
-  private renderer: THREE.WebGLRenderer;
+  private renderer!: THREE.WebGLRenderer;
   private time: number;
   //cameraSetting
-  private camera: THREE.PerspectiveCamera;
-  private orthCamera: THREE.OrthographicCamera;
+  private camera!: THREE.PerspectiveCamera;
+  private orthCamera!: THREE.OrthographicCamera;
   private perspective: number;
   private fov: 50;
   private size: { width: number, height: number };
   private aspectRatio: number;
   // RT
-  private sourceRT: THREE.WebGLRenderTarget
+  private sourceRT!: THREE.WebGLRenderTarget
   //OBJ
-  private number: NumberGen
-  private points: Points;
-  private points2: Points;
-  private ps: Postprocessing;
-  private finalQuad: THREE.Mesh
+  private number!: NumberGen
+  private points!: Points;
+  private points2!: Points;
+  private ps!: Postprocessing;
+  private finalQuad!: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>
   // RAY CASTER
   private raycaster: THREE.Raycaster;
   private pointer: THREE.Vector2;
@@ -137,9 +136,9 @@ export default class Canvas {
     this.pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
     this.pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
     this.raycaster.setFromCamera(this.pointer, this.orthCamera);
-    let intersects = this.raycaster.intersectObject(this.ps.mesh);
+    const  intersects = this.raycaster.intersectObject(this.ps.mesh);
     if (intersects.length > 0) {
-      let { x, y } = intersects[0].point;
+      const  { x, y } = intersects[0].point;
       if (!this.points.material?.uniforms) return
       this.points.material.uniforms.uMouse.value.set(x * 0.5, y * 0.5, 0.1);
       this.points2.material.uniforms.uMouse.value.set(x * 0.5, y * 0.5, 0.1);
@@ -184,8 +183,10 @@ export default class Canvas {
     this.renderer.render(this.scene, this.camera);
 
     this.renderer.setRenderTarget(this.ps.renderTargetA);
-    this.ps.mesh.material.uniforms.uCurrent.value = this.sourceRT.texture;
-    this.ps.mesh.material.uniforms.uPrev.value = this.ps.renderTargetB.texture;
+    if(this.ps.mesh.material instanceof  THREE.ShaderMaterial){
+      this.ps.mesh.material.uniforms.uCurrent.value = this.sourceRT.texture;
+      this.ps.mesh.material.uniforms.uPrev.value = this.ps.renderTargetB.texture;
+    }else{throw new Error("material is not THREE.ShaderMaterial");}
     this.renderer.render(this.ps.mesh, this.orthCamera)
 
     this.renderer.setRenderTarget(null)

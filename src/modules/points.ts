@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import GUI from "lil-gui";
 
 import vertex from "../glsl/points/vertex.glsl";
 import fragment from "../glsl/points/fragment.glsl";
@@ -30,16 +29,14 @@ export default class Points {
   private position: { x: number, y: number, z: number }
   private isShadow: number;
   // GUI
-  private settings: {};
-  private gui: GUI
   // TEXTURES
   private images: string[];
-  private textures: THREE.Texture[]
+  private textures!: THREE.Texture[]
   //  OBJ SETTINGS
   private size: number;
   private count: number;
-  public material: THREE.ShaderMaterial;
-  public points: THREE.Points;
+  public material!: THREE.ShaderMaterial;
+  public points!: THREE.Points;
 
   constructor(args?: Args) {
     this.position = args && args.position || { x: 0, y: 0, z: 0 }

@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import Canvas from "../canvas"
 
 const TCanvas = () => {
-  const [canvas, setCanvas] = useState<Canvas>()
   useEffect(() => {
-    const canvas = Canvas.instance
-    setCanvas(canvas)
+    Canvas.instance
   }, [])
   return (
     <canvas id="canvas" />
